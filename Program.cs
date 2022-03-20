@@ -19,7 +19,7 @@ namespace UILayerSprint1
             {
                 Console.WriteLine("Enter the Username and Password");
                 string username = Console.ReadLine();
-                string password = Console.ReadLine();//have to make it invisible and replace it by stars
+                string password = Console.ReadLine();
                 if (5>4/*Admin.isValidAdmin(username, password)*/)
                 {
                     Console.Clear();
@@ -377,8 +377,37 @@ namespace UILayerSprint1
                                                 Console.WriteLine("Address Country: " + objAddress2.Country);
                                                 break;
                                             }
-
                                             else if (choice3 == "2")
+                                            {
+                                                Console.Clear(); Console.WriteLine("PATIENT MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
+                                                Console.WriteLine("Fetching the Patient's Details by Phone Number");
+                                                Console.WriteLine("Enter the Phone Number");
+                                                long patPN = Convert.ToInt64(Console.ReadLine());
+                                                List<Patient> patientsList = Hospital.FetchPatientsByPhoneNumber(patPN);
+                                                foreach (Patient patient in patientsList)
+                                                {
+                                                    Console.WriteLine("Patient Id: " + patient.PatientId);
+                                                    Console.WriteLine("Name: " + patient.PatientFirstName + " " + patient.PatientMiddleName + " " + patient.PatientLastName);
+                                                    Console.WriteLine("Date Of Birth: " + patient.PatientDOB.Date);
+                                                    Console.WriteLine("Body Mass Index: " + patient.PatientBMI);
+                                                    Console.WriteLine("IsDiabetic: " + patient.IsDiabeticPatient);
+                                                    Console.WriteLine("Medical  History: " + patient.PatientMedicalHistory);
+                                                    Console.WriteLine("Phone Number: " + patient.PatientPhoneNumber);
+                                                    Console.WriteLine("Address--------");
+                                                    Address patientAddress = Hospital.FetchAddress(patient.PatientAddressCode);
+                                                    Console.WriteLine("Address Code: " + patientAddress.AddressCode);
+                                                    Console.WriteLine("House No." + patientAddress.AddressLine1);
+                                                    Console.WriteLine("AddressLine: " + patientAddress.AddressLine2);
+                                                    Console.WriteLine("Address LandMark: " + patientAddress.LandMark);
+                                                    Console.WriteLine("Address City Name: " + patientAddress.City);
+                                                    Console.WriteLine("Address PineCode: " + patientAddress.PinCode);
+                                                    Console.WriteLine("Address State: " + patientAddress.State);
+                                                    Console.WriteLine("Address Country: " + patientAddress.Country);
+                                                    Console.WriteLine();
+                                                }
+                                                break;
+                                            }
+                                            else if (choice3 == "3")
                                             {
                                                 Console.Clear(); Console.WriteLine("PATIENT MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
                                                 Console.WriteLine("Fetching all the Patient's Details");
@@ -406,16 +435,16 @@ namespace UILayerSprint1
                                                 }
                                                 break;
                                             }
-                                            else if (choice3 == "3")
+                                            else if (choice3 == "4")
                                             {
                                                 Console.Clear(); Console.WriteLine("PATIENT MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
                                                 Console.WriteLine("Deleting Patient's record");
                                                 Console.WriteLine("Enter the Patient's Id to be deleted");
                                                 string patId2 = Console.ReadLine();
-                                                Hospital.DeletePatient(patId2);
+                                                Console.WriteLine(Hospital.DeletePatient(patId2));
                                                 break;
                                             }
-                                            else if (choice3 == "4")
+                                            else if (choice3 == "5")
                                             {
                                                 Console.Clear(); Console.WriteLine("PATIENT MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
                                                 Console.WriteLine("Updating Patient's Details");
@@ -445,6 +474,7 @@ namespace UILayerSprint1
                                                         Hospital.ModifyPatientFirstName(patId3, patFirstName);
                                                         Hospital.ModifyPatientMiddleName(patId3, patMiddleName);
                                                         Hospital.ModifyPatientLastName(patId3, patLastName);
+                                                        Console.WriteLine("Name Updated");
                                                         break;
                                                     }
                                                     else if (choice4 == "2")
@@ -452,14 +482,14 @@ namespace UILayerSprint1
                                                         Console.WriteLine("Enter the new DOB in the format: YYYY-MM-DD");
                                                         string patDOB = Console.ReadLine();
                                                         DateTime newDOB = Convert.ToDateTime(patDOB);
-                                                        Hospital.ModifyPatientDOB(patId3, newDOB);
+                                                        Console.WriteLine(Hospital.ModifyPatientDOB(patId3, newDOB));
                                                         break;
                                                     }
                                                     else if (choice4 == "3")
                                                     {
                                                         Console.WriteLine("Enter the new BMI");
                                                         float patBMI = (float)Convert.ToDouble(Console.ReadLine());
-                                                        Hospital.ModifyPatientBMI(patId3, patBMI);
+                                                        Console.WriteLine(Hospital.ModifyPatientBMI(patId3, patBMI));
                                                         break;
                                                     }
                                                     else if (choice4 == "4")
@@ -468,21 +498,21 @@ namespace UILayerSprint1
                                                         string patD = Console.ReadLine();
                                                         bool isD;
                                                         if (patD.Equals("true", StringComparison.OrdinalIgnoreCase)) { isD = true; } else { isD = false; }
-                                                        Hospital.ModifyPatientIsDiabetic(patId3, isD);
+                                                        Console.WriteLine(Hospital.ModifyPatientIsDiabetic(patId3, isD));
                                                         break;
                                                     }
                                                     else if (choice4 == "5")
                                                     {
                                                         Console.WriteLine("Enter Patient's Full Medical History");
                                                         string patMH = Console.ReadLine();
-                                                        Hospital.ModifyPatientMedicalHistory(patId3, patMH);
+                                                        Console.WriteLine(Hospital.ModifyPatientMedicalHistory(patId3, patMH));
                                                         break;
                                                     }
                                                     else if (choice4 == "6")
                                                     {
                                                         Console.WriteLine("Enter the Patient's Phone Number");
                                                         long patPN = Convert.ToInt64(Console.ReadLine());
-                                                        Hospital.ModifyPatientPhoneNumber(patId3, patPN);
+                                                        Console.WriteLine(Hospital.ModifyPatientPhoneNumber(patId3, patPN));
                                                         break;
                                                     }
                                                     else if (choice4 == "7")
@@ -504,7 +534,7 @@ namespace UILayerSprint1
                                                         Console.WriteLine("Enter the Country");
                                                         objAddress3.Country = Console.ReadLine();
                                                         Hospital.SaveAddress(objAddress3);
-                                                        Hospital.ModifyPatientAddress(patId3, Hospital.FetchAddress(objAddress3.AddressCode).AddressCode);
+                                                        Console.WriteLine(Hospital.ModifyPatientAddress(patId3, Hospital.FetchAddress(objAddress3.AddressCode).AddressCode));
                                                         break;
                                                     }
                                                     else
@@ -852,12 +882,8 @@ namespace UILayerSprint1
                                             Console.Clear(); Console.WriteLine("CONSULTATION MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
                                             Console.WriteLine("Previous Consultation");
                                             Console.WriteLine("How may we help you: "); Console.WriteLine(); Console.WriteLine();
-                                            Console.WriteLine("1: Fetch Consultation Details by Id");
-                                            string choice3 = Console.ReadLine();
-                                            if (choice3 == "1")
-                                            {
-                                                Console.Clear(); Console.WriteLine("CONSULTATION MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
-                                                Console.WriteLine("Fetching Previous Consulatation Details by Id");
+                                            Console.WriteLine("1: Fetch Consultation Details by PrescriptionId");
+
                                                 Console.WriteLine("Enter the Prescription Id");
                                                 string pcnId = Console.ReadLine();
                                                 Consultation objConsultation2=Hospital.FetchConsultationSlip(pcnId);
@@ -869,13 +895,6 @@ namespace UILayerSprint1
                                                 Console.WriteLine("DrugDosageId: " + objConsultation2.Dosage);
                                                 Console.WriteLine("DrugDosage Duration: " + Hospital.FetchDosageById(objConsultation2.Dosage).DosageDuration);
                                                 break;
-                                            }
-
-                                            else
-                                            {
-                                                Console.WriteLine("Invalid Choice");
-                                            }
-
                                         }
                                         break;
                                     }
