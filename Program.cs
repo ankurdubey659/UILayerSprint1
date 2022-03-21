@@ -20,12 +20,11 @@ namespace UILayerSprint1
                 Console.WriteLine("Enter the Username and Password");
                 string username = Console.ReadLine();
                 string password = Console.ReadLine();
-                if (Admin.isValidAdmin(username, password))
+                if (AdminDetails.isValidAdmin(username, password))
                 {
                     Console.Clear();
                     try
                     {
-
 
                         while (true)
                         {
@@ -58,10 +57,10 @@ namespace UILayerSprint1
                                         objPhysician1.PhysicianPhoneNumber = Convert.ToInt64(Console.ReadLine());
                                         Console.WriteLine("Enter the Email-Id");
                                         objPhysician1.PhysicianEmail = Console.ReadLine();
-                                        Console.WriteLine(Hospital.NewPhysician(objPhysician1));
                                         Console.Clear();
                                         Console.WriteLine("PYSICIAN MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
                                         Console.WriteLine("New Physician"); Console.WriteLine(); Console.WriteLine();
+                                        Console.WriteLine(Hospital.NewPhysician(objPhysician1));
                                         Physician objPhysician = Hospital.FetchPhysicianById(objPhysician1.PhysicianId);
                                         Console.WriteLine("Physician Id: " + objPhysician.PhysicianId);
                                         Console.WriteLine("Name: " + objPhysician.PhysicianFirstName + " " + objPhysician.PhysicianMiddleName + " " + objPhysician.PhysicianLastName);
@@ -146,15 +145,15 @@ namespace UILayerSprint1
                                                     string choice4 = Console.ReadLine();
                                                     if (choice4 == "1")
                                                     {
-                                                        Console.Write("New First Name");
+                                                        Console.WriteLine("New First Name");
                                                         string phyFirstName = Console.ReadLine();
                                                         Console.WriteLine("New Second Name");
                                                         string phyMiddleName = Console.ReadLine();
                                                         Console.WriteLine("New Last Name");
                                                         string phyLastName = Console.ReadLine();
-                                                        Hospital.ModifyPatientFirstName(phyId3, phyFirstName);
-                                                        Hospital.ModifyPatientMiddleName(phyId3, phyMiddleName);
-                                                        Hospital.ModifyPatientLastName(phyId3, phyLastName);
+                                                        Hospital.ModifyPhysicianFirstName(phyId3, phyFirstName);
+                                                        Hospital.ModifyPhysicianMiddleName(phyId3, phyMiddleName);
+                                                        Console.WriteLine( Hospital.ModifyPhysicianLastName(phyId3, phyLastName));
                                                         break;
                                                     }
                                                     else if (choice4 == "2")
@@ -465,7 +464,7 @@ namespace UILayerSprint1
                                                     string choice4 = Console.ReadLine();
                                                     if (choice4 == "1")
                                                     {
-                                                        Console.Write("New First Name");
+                                                        Console.WriteLine("New First Name");
                                                         string patFirstName = Console.ReadLine();
                                                         Console.WriteLine("New Second Name");
                                                         string patMiddleName = Console.ReadLine();
@@ -670,10 +669,8 @@ namespace UILayerSprint1
                                         objDrug1.Composition = Console.ReadLine();
                                         Console.WriteLine("Enter the Batch Number");
                                         objDrug1.BatchNo = Convert.ToInt64(Console.ReadLine());
-                                        Console.WriteLine("Enter Drug Dosage Involed");
-                                        objDrug1.DrugDosageInvolvedId = Console.ReadLine();
-                                        Console.WriteLine("Enter the Drug Dose");
-                                        objDrug1.DrugDose = Console.ReadLine();
+                                        objDrug1.DrugDosageInvolvedId = "NM";
+                                        objDrug1.DrugDose = "NM";
 
                                         Console.WriteLine(Hospital.NewDrug(objDrug1));
                                         Console.Clear();
@@ -834,7 +831,9 @@ namespace UILayerSprint1
                                         objConsultation1.Dosage = Hospital.SetDrugDosageId();
                                         DrugDosage objDrugDosage = new DrugDosage();
                                         objDrugDosage.DrugDosageId = objConsultation1.Dosage;
-
+                                        Console.WriteLine("Enter the DrugDosage Duration");
+                                        objDrugDosage.DosageDuration = Console.ReadLine();
+                                        Hospital.AssignDosage(objDrugDosage);
                                         Console.WriteLine("Enter the number of drugs to be given");
                                         int noOfDrugs = Convert.ToInt32(Console.ReadLine());
                                         for(int i =1;i<=noOfDrugs;i++)
@@ -846,10 +845,8 @@ namespace UILayerSprint1
                                             string dose = Console.ReadLine();
                                             Hospital.UpdateDrugDose(drugId, dose);
                                         }
-                                        Console.WriteLine("Enter the DrugDosage Duration");
-                                        objDrugDosage.DosageDuration = Console.ReadLine();
-                                        Hospital.AssignDosage(objDrugDosage);
                                         Console.WriteLine(Hospital.Consult(objConsultation1));
+                                        Hospital.UpdateAllAppointmentStatus();
                                         Console.Clear();
                                         Console.WriteLine("CONSULTATION MAINTAINANCE"); Console.WriteLine(); Console.WriteLine();
                                         Console.WriteLine("Consultation Slip"); Console.WriteLine(); Console.WriteLine();
@@ -914,8 +911,6 @@ namespace UILayerSprint1
                                 Console.WriteLine();
                             }
                         }
-
-
 
                     }
 
