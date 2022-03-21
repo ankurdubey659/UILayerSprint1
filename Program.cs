@@ -20,7 +20,7 @@ namespace UILayerSprint1
                 Console.WriteLine("Enter the Username and Password");
                 string username = Console.ReadLine();
                 string password = Console.ReadLine();
-                if (5>4/*Admin.isValidAdmin(username, password)*/)
+                if (Admin.isValidAdmin(username, password))
                 {
                     Console.Clear();
                     try
